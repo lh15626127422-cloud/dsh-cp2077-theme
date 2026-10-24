@@ -5,7 +5,7 @@
 [![version](https://img.shields.io/badge/version-2.0.0-00E5FF)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/releases)
 [![dsh](https://img.shields.io/badge/dsh-0.2.x-FF2E9A)](https://github.com/deepseek-ai)
 
-给 DeepSeek Harness Web GUI 用的赛博朋克 2077 风格主题插件。
+给 DeepSeek Harness Web GUI 用的赛博朋克 2077 风格主题插件。**[English → README.en.md](README.en.md)**
 
 夜之城配色：黑紫底 + 2077 黄（`#FCEE0A`）+ 霓虹青（`#00E5FF`）+ 品红；切角面板、HUD 字体、全高渐隐网格、CRT 扫描线、四角青色角标。
 
