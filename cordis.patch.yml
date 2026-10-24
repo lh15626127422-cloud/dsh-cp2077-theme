@@ -1,0 +1,11 @@
+# The only setting this bundle reads is `workshopRoot` — the Wallpaper Engine
+# workshop folder. Leave it empty to let the host auto-detect Steam libraries
+# (registry + libraryfolders.vdf on Windows, the usual paths on macOS/Linux).
+#
+#   config:
+#     workshopRoot: 'D:/Steam/steamapps/workshop/content/431960'
+
+- insert:
+    - id: cp2077-theme
+      name: '@local/cp2077-theme'
+      config: {}

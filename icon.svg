@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Cyberpunk 2077 theme">
+  <defs>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FCEE0A"/>
+      <stop offset="0.55" stop-color="#FCEE0A"/>
+      <stop offset="0.56" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00E5FF"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="4" fill="#0A0910"/>
+  <path d="M10 10 H88 L118 40 V118 H10 Z" fill="none" stroke="url(#edge)" stroke-width="4"/>
+  <path d="M88 10 V40 H118" fill="none" stroke="#00E5FF" stroke-width="4" opacity="0.75"/>
+  <path d="M26 92 L44 58 L58 92 L76 58 L94 92" fill="none" stroke="#FCEE0A" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter"/>
+  <rect x="26" y="26" width="16" height="6" fill="#FF2E9A"/>
+  <rect x="48" y="26" width="10" height="6" fill="#00E5FF"/>
+  <rect x="26" y="104" width="46" height="3" fill="#00E5FF" opacity="0.55"/>
+</svg>

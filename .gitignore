@@ -1,0 +1,12 @@
+# local edit backups kept while iterating
+*.bak-*
+*.bak
+
+# packaging leftovers
+*.tgz
+node_modules/
+
+# OS noise
+.DS_Store
+Thumbs.db
+*.log
