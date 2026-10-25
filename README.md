@@ -2,7 +2,7 @@
 
 [![ci](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/actions/workflows/ci.yml/badge.svg)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-FCEE0A)](LICENSE)
-[![version](https://img.shields.io/badge/version-2.0.0-00E5FF)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/releases)
+[![version](https://img.shields.io/badge/version-2.0.1-00E5FF)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/releases)
 [![dsh](https://img.shields.io/badge/dsh-0.2.x-FF2E9A)](https://github.com/deepseek-ai)
 
 给 DeepSeek Harness Web GUI 用的赛博朋克 2077 风格主题插件。**[English → README.en.md](README.en.md)**
@@ -74,6 +74,14 @@ node scripts/install.mjs            # 链接进 ~/.dsh/profiles/web
 ---
 
 ## 更新日志
+
+## 2.0.1
+
+| 问题 | 根因 | 修法 |
+| --- | --- | --- |
+| 鼠标停在停止按钮上，按钮持续闪动 | 主按钮 hover 上有一段 0.26s 的一次性 `clip-path` 撕裂动画；回合进行中这个位置是停止按钮，前端每收到一段流式内容就重渲染一次，动画随之重启，看起来就是不停闪 | 删掉主按钮的 hover 动画（`@keyframes cp2077-glitch` 与对应规则），只保留 hover 的提亮与光晕 |
+
+动画仍在别处：Logo wordmark 的像素级撕裂用的是 SVG `feTurbulence` + `feDisplacementMap` 滤镜，与这里的 keyframes 同名但互不相干，未受影响。
 
 
 ## 2.0.0

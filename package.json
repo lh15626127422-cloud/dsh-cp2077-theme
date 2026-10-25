@@ -1,6 +1,6 @@
 {
   "name": "@local/cp2077-theme",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "description": "Cyberpunk 2077 themed UI for the DeepSeek Harness Web GUI",
   "exports": {

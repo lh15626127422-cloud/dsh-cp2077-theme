@@ -790,16 +790,9 @@ body[data-ds-dark-theme] blockquote::before {
   color: var(--cy-cyan);
   opacity: .7;
 }
-/* primary hover: one-shot glitch, no loop */
-@keyframes cp2077-glitch {
-  0%, 100% { clip-path: var(--cp-cut-br); transform: none; }
-  20% { clip-path: polygon(0 12%, 100% 12%, 100% 46%, 0 46%); transform: translateX(-2px); }
-  40% { clip-path: polygon(0 58%, 100% 58%, 100% 88%, 0 88%); transform: translateX(2px); }
-  60% { clip-path: var(--cp-cut-br); transform: translateX(-1px); }
-}
-body[data-ds-dark-theme] button[class*="_primary"]:not(:disabled):not([aria-disabled="true"]):hover {
-  animation: cp2077-glitch .26s steps(2, end) 1;
-}
+/* primary hover: no glitch animation. The composer primary button becomes the
+   stop control while a turn streams, and React re-renders it per chunk — any
+   animation there restarts constantly and reads as flicker. */
 /* inline code: Edgerunners pink for contrast against yellow */
 body[data-ds-dark-theme] code:not(pre code) { color: #FF5FA8; }
 @media (prefers-reduced-motion: reduce) {
@@ -2244,7 +2237,7 @@ body:not([data-ds-dark-theme]) .cp2077-row-path {
       );
     }
 
-    const VERSION = '2.0.0';
+    const VERSION = '2.0.1';
 
     const STYLE_ATTR = 'data-cp2077-theme';
     const LAYER_CLASS = 'cp2077-layer';
