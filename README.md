@@ -2,7 +2,7 @@
 
 [![ci](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/actions/workflows/ci.yml/badge.svg)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-FCEE0A)](LICENSE)
-[![version](https://img.shields.io/badge/version-2.0.1-00E5FF)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/releases)
+[![version](https://img.shields.io/badge/version-2.0.2-00E5FF)](https://github.com/lh15626127422-cloud/dsh-cp2077-theme/releases)
 [![dsh](https://img.shields.io/badge/dsh-0.2.x-FF2E9A)](https://github.com/deepseek-ai)
 
 给 DeepSeek Harness Web GUI 用的赛博朋克 2077 风格主题插件。**[English → README.en.md](README.en.md)**
@@ -80,6 +80,14 @@ node scripts/install.mjs            # 链接进 ~/.dsh/profiles/web
 ---
 
 ## 更新日志
+
+## 2.0.2
+
+| 问题 | 根因 | 修法 |
+| --- | --- | --- |
+| 停止按钮的提示卡被右边缘截断（`Esc` 只剩一半） | 输入框卡片的切角是用 `clip-path` 画在卡片本身上的，而 `clip-path` 会连子元素一起裁；停止按钮的提示卡是 DSH 直接渲染在卡片内部的（`side: top`，没有 portal），于是被卡片的右边界切掉 | 切角改由 `::before` 伪元素承载（`inset: 0` + 自身的 `clip-path`），卡片本体改成透明、`clip-path: none` —— 视觉完全不变，但不再裁切任何子元素 |
+
+顺带说明：卡片因此多了 `position: relative` 与 `isolation: isolate`，让伪元素稳定地落在内容之下；壁纸模式下给输入框的实心底色也同步移到了伪元素上。
 
 ## 2.0.1
 

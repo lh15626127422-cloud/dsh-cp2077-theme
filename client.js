@@ -873,6 +873,11 @@ body:not([data-ds-dark-theme]) .cp2077-grid {
 }
 
 /* ── 16. composer card: chamfered corners + edge accent ──── */
+
+/* The chamfer is painted on a pseudo-element surface instead of on the card
+   itself. A clip-path on the card also clips every descendant, and the
+   composer renders its stop-button tooltip inside the card (side top, no
+   portal), so that tooltip used to get cut off at the card edge. */
 body {
   --cp-cut-accent: #C9A200;
 }
@@ -882,16 +887,23 @@ body[data-ds-dark-theme] {
 
 body [data-composer-seat] [class*="_card"]:not([class*="Workspace"]),
 body [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"]) {
+  position: relative;
+  isolation: isolate;
   border-radius: 0 !important;
-  clip-path: polygon(
-    var(--cp-chamfer) 0,
-    100% 0,
-    100% calc(100% - var(--cp-chamfer)),
-    calc(100% - var(--cp-chamfer)) 100%,
-    0 100%,
-    0 var(--cp-chamfer)
-  );
-  background-color: var(--dsw-specific-input-major) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+}
+
+body [data-composer-seat] [class*="_card"]:not([class*="Workspace"])::before,
+body [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"])::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--dsw-specific-input-major);
   background-image:
     linear-gradient(135deg,
       transparent calc(50% - .9px),
@@ -908,22 +920,27 @@ body [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"]) {
     calc(var(--cp-chamfer) * 1.3) calc(var(--cp-chamfer) * 1.3),
     calc(var(--cp-chamfer) * 1.5) calc(var(--cp-chamfer) * 1.5);
   background-repeat: no-repeat;
-  box-shadow: inset 0 0 0 1px var(--dsw-alias-border-l2) !important;
+  clip-path: polygon(
+    var(--cp-chamfer) 0,
+    100% 0,
+    100% calc(100% - var(--cp-chamfer)),
+    calc(100% - var(--cp-chamfer)) 100%,
+    0 100%,
+    0 var(--cp-chamfer)
+  );
+  box-shadow: inset 0 0 0 1px var(--dsw-alias-border-l2);
 }
 
-body[data-ds-dark-theme] [data-composer-seat] [class*="_card"]:not([class*="Workspace"]),
-body[data-ds-dark-theme] [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"]) {
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--cy-cyan) 30%, transparent),
-    0 0 26px rgba(0, 229, 255, .10) !important;
+body[data-ds-dark-theme] [data-composer-seat] [class*="_card"]:not([class*="Workspace"])::before,
+body[data-ds-dark-theme] [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"])::before {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cy-cyan) 30%, transparent);
 }
 
-body:not([data-ds-dark-theme]) [data-composer-seat] [class*="_card"]:not([class*="Workspace"]),
-body:not([data-ds-dark-theme]) [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"]) {
-  box-shadow:
-    inset 0 0 0 1px rgba(10, 9, 16, .22),
-    2px 2px 0 0 rgba(10, 9, 16, .10) !important;
+body:not([data-ds-dark-theme]) [data-composer-seat] [class*="_card"]:not([class*="Workspace"])::before,
+body:not([data-ds-dark-theme]) [data-slot*="input.dock"] [class*="_card"]:not([class*="Workspace"])::before {
+  box-shadow: inset 0 0 0 1px rgba(10, 9, 16, .22);
 }
+
 /* ── 17. horizon glow: removed ───────────────────────────────
    用户连续两轮反馈城市与地平线都干扰阅读，对话区回到完全干净的背景。
    氛围改由不占正文的位置承担：网格、四角角标、顶部渐变条、32s 一次的细扫光。 */
@@ -1592,10 +1609,10 @@ html[data-cp2077-wallpaper="on"] .cp2077-wallpaper { filter: saturate(1.02); }
 
 /* solid surfaces stay solid: the composer and code blocks must not turn
    into windows onto the photo, or the input caret disappears into it */
-html[data-cp2077-wallpaper="on"] [data-slot*="input.dock"] [class*="_card"] {
+html[data-cp2077-wallpaper="on"] [data-slot*="input.dock"] [class*="_card"]::before {
   background-color: rgba(10, 9, 16, .88) !important;
 }
-html[data-cp2077-wallpaper="on"] body:not([data-ds-dark-theme]) [data-slot*="input.dock"] [class*="_card"] {
+html[data-cp2077-wallpaper="on"] body:not([data-ds-dark-theme]) [data-slot*="input.dock"] [class*="_card"]::before {
   background-color: rgba(250, 247, 240, .93) !important;
 }
 html[data-cp2077-wallpaper="on"] body pre {
@@ -1785,6 +1802,19 @@ body:not([data-ds-dark-theme]) .cp2077-row-path {
 }
 .cp2077-wallpaper-motion.is-disabled input {
   cursor: not-allowed;
+}
+
+/* ── 35. tooltips keep their own width ──────────────────────── */
+/* A hint pill pairs a label with a shortcut chip; if the box clamps its
+   width the chip is the first thing to get chopped. Let it size to its
+   content and never clip the children. */
+body [role="tooltip"] {
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+body [role="tooltip"] kbd {
+  letter-spacing: 0 !important;
 }
 `;
 
@@ -2237,7 +2267,7 @@ body:not([data-ds-dark-theme]) .cp2077-row-path {
       );
     }
 
-    const VERSION = '2.0.1';
+    const VERSION = '2.0.2';
 
     const STYLE_ATTR = 'data-cp2077-theme';
     const LAYER_CLASS = 'cp2077-layer';
